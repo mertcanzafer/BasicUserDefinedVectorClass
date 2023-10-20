@@ -10,7 +10,7 @@ Vector::Vector()
 Vector::Vector
 (
 	int32_t elements, int32_t value
-):Vector()
+):size{0},capacity{5},Array{nullptr}
 {
 	size = elements;
 	capacity += elements; 
@@ -21,6 +21,18 @@ Vector::Vector
 		Array[i] = value;
 	}
 
+}
+
+Vector::Vector(const std::initializer_list<int32_t>& list)
+	:size{ 0 }, capacity{ 0 }, Array{ nullptr }
+{
+	capacity = static_cast<uint32_t>(list.size()) + 5;
+	Array = new int32_t[capacity];
+
+	for (auto& i : list)
+	{
+		push_back(i);
+	}
 }
 
 Vector::Vector(const Vector& copy)
@@ -38,8 +50,32 @@ Vector::Vector(const Vector& copy)
 
 void Vector:: push_back(int32_t value)
 {
-	Array[size] = value;
-	size++;
+	if (size < capacity)
+	{
+		Array[size] = value;
+		size++;
+	}
+	else {
+		capacity *= 2;
+		int32_t* newAray = new int32_t[capacity];
+
+		for (size_t i = 0; i < size; i++)
+		{
+			newAray[i] = Array[i];
+		}
+		delete[] Array;
+
+		Array = newAray;
+		newAray = nullptr;
+		Array[size] = value;
+		size++;
+	}
+}
+
+void Vector::pop_back()
+{
+	if (IsEmpty()) { throw std::exception("Vector is empty already!!!"); }
+	size--;
 }
 
 bool VNS::Vector::operator==(const Vector& rhs) const
@@ -59,6 +95,45 @@ bool VNS::Vector::operator==(const Vector& rhs) const
 bool Vector::operator!=(const Vector& rhs) const
 {
 	return !(*this == rhs);
+}
+
+Vector& Vector::operator=(const Vector& rhs)
+{
+	if (rhs.size > this->size)
+	{
+		size = rhs.size;
+		capacity = rhs.capacity;
+		delete[] Array;
+		Array = new int32_t[rhs.capacity];
+	}
+
+	for (int i = 0; i < rhs.size; i++)
+	{
+		Array[i] = rhs.Array[i];
+	}
+	return *this;
+}
+
+int& Vector::operator[](uint32_t index)
+{
+	return Array[index];
+}
+
+int& Vector::at(uint32_t index)
+{
+	if (size < 0 || index >= size) throw std::exception("Out of bound Exception!!");
+
+	return Array[index];
+}
+
+int& Vector::front()
+{
+	return Array[0];
+}
+
+int& Vector::back()
+{
+	return Array[size - 1];
 }
 
 Vector::~Vector()

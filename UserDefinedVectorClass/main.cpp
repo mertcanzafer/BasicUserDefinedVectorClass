@@ -24,5 +24,25 @@ int main()
 
 	std::cout << ((vec.IsEmpty()) ? "The vector is empty" : "No, the vector is not empty")<<std::endl;
 
+	VNS::Vector vec3{ 1,2,3,4,5,5,6,7 };
+	std::cout << vec3 << std::endl;
+
+	while (!vec3.IsEmpty())
+	{
+		vec3.pop_back();
+		std::cout << vec3;
+	}
+	try {
+		vec3.pop_back();
+	}
+	catch (std::exception& ex)
+	{
+		std::cout << "Exception handled!!" << std::endl;
+	}
+
+	vec = vec3;
+	std::cout << vec << std::endl;
+
+
 	return 0;
 }

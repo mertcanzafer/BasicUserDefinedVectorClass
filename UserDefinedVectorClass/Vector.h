@@ -18,15 +18,23 @@ namespace VNS
 	   public:
 		   Vector();
 		   Vector(int32_t elements, int32_t value = 0);
+		   Vector(const std::initializer_list<int32_t>& list);
 
 		   void push_back(int32_t value);
-		  
+		   void pop_back();
+
 		   inline bool IsEmpty()const { return (size == 0); };
 		   inline uint32_t getSize()const { return size; }
 		   inline uint32_t getCapasity()const { return capacity; }
 
 		   bool operator==(const Vector& rhs)const;
 		   bool operator!=(const Vector& rhs)const;
+
+		   Vector& operator=(const Vector& rhs);
+		   int& operator[](uint32_t index);
+		   int& at(uint32_t index);
+		   int& front();
+		   int& back();
 
 		   friend std::ostream& operator <<(std::ostream& os, const Vector& rhs);
 
