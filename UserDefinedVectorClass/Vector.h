@@ -22,6 +22,9 @@ namespace VNS
 
 		   void push_back(int32_t value);
 		   void pop_back();
+		   void insert(int32_t index, int32_t value);
+		   void erase(uint32_t index);
+		   void clear();
 
 		   inline bool IsEmpty()const { return (size == 0); };
 		   inline uint32_t getSize()const { return size; }

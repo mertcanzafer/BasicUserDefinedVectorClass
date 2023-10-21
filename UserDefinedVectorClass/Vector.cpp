@@ -78,6 +78,60 @@ void Vector::pop_back()
 	size--;
 }
 
+void Vector::insert(int32_t index, int32_t value)
+{
+	if (index < 0 || index >= size) throw std::exception("Out of bound!!!");
+
+	if (size < capacity)
+	{
+		for (int i = size; i > index; i--)
+		{
+			Array[i] = Array[i - 1];
+		}
+
+		Array[index] = value;
+		size++;
+	}
+
+	else 
+	{
+		capacity *= 2;
+		int32_t* newArray = new int32_t[capacity];
+
+		for (int i = 0; i < size; i++)
+		{
+			newArray[i] = Array[i];
+		}
+		delete[] Array;
+
+		Array = newArray;
+		newArray = nullptr;
+
+		for (int i = size; i > index; i--)
+		{
+			Array[i] = Array[i - 1];
+		}
+
+		Array[index] = value;
+		size++;
+	}
+}
+
+void Vector::erase(uint32_t index)
+{
+	if (index < 0 || index >= size) throw std::exception("Index out of range");
+	for (int i = index; i < size; i++)
+	{
+		Array[i] = Array[i + 1];
+ 	}
+	size--;
+}
+
+void VNS::Vector::clear()
+{
+	size = 0;
+}
+
 bool VNS::Vector::operator==(const Vector& rhs) const
 {
 	if (this->size != rhs.size) return false; // both sizes should be identical

@@ -43,6 +43,16 @@ int main()
 	vec = vec3;
 	std::cout << vec << std::endl;
 
+	std::cout <<"Size = " << vec.getSize()<<std::endl;
+
+	vec.insert(0, 1);
+	
+	std::cout << vec << std::endl;
+
+	vec.erase(0);
+
+	std::cout << vec << std::endl;
+	std::cout << "Size = " << vec.getSize() << std::endl;
 
 	return 0;
 }
